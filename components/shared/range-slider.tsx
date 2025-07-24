@@ -49,7 +49,7 @@ const RangeSlider = forwardRef(
           <SliderPrimitive.Range className="absolute h-full bg-primary" />
         </SliderPrimitive.Track>
         {localValues.map((value, index) => (
-          <>
+          <React.Fragment key={index}>
             <div
               className="absolute text-center"
               style={{
@@ -59,7 +59,7 @@ const RangeSlider = forwardRef(
               <span className="text-sm">{formatLabel ? formatLabel(value) : value}</span>
             </div>
             <SliderPrimitive.Thumb className="block h-4 w-4 rounded-full border border-primary/50 bg-white shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
-          </>
+          </React.Fragment>
         ))}
       </SliderPrimitive.Root>
     );
