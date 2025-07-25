@@ -47,14 +47,14 @@ export const Categories = ({ classname }: Props) => {
       {categories.map(({id, name}) => (
         <a
           className={cn(
-            'flex items-center font-bold h-11 rounded-2xl px-5',
+            'flex items-center font-bold h-11 rounded-2xl px-5 cursor-pointer',
             categoryActiveId === id &&
-              'bg-white shadow-md shadow-gray-200 text-primary'
+              'bg-white shadow-md shadow-gray-200 text-primary cursor-default'
           )}
-          href={`/#${name.toLowerCase()}`}
+          href={`/#${name}`}
           key={id}
         >
-          <button>{name}</button>
+          <button className={cn(categoryActiveId !== id ? 'cursor-pointer' : 'cursor-default')}>{name}</button>
         </a>
       ))}
     </div>
