@@ -5,15 +5,23 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
   id Int @id @default(autoincrement())
 
   fullname String
-  email    String @unique
+  email    String   @unique
   password String
+  role     UserRole @default(USER)
+  verified DateTime
+
+  provider   String?
+  providerId String?
+
+  cart             Cart?
+  order            Order[]
+  verificationCode verificationCode?
 
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt
@@ -45,10 +53,11 @@ model Product {
 model ProductItem {
   id Int @id @default(autoincrement())
 
-  name      String
   price     Int
-  size      String?
-  pizzaType String?
+  size      Int?
+  pizzaType Int?
+
+  cartItems cartItem[]
 
   product   Product @relation(fields: [productId], references: [id])
   productId Int
@@ -62,7 +71,89 @@ model Ingredient {
   imageUrl String
 
   products Product[]
+  carItems cartItem[]
 
   createAt DateTime @default(now())
   updateat DateTime @updatedAt
+}
+
+model Cart {
+  id Int @id @default(autoincrement())
+
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?  @unique
+
+  items cartItem[]
+
+  token String
+
+  totalAmount Int @default(0)
+
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model cartItem {
+  id Int @id @default(autoincrement())
+
+  cart   Cart @relation(fields: [cartId], references: [id])
+  cartId Int
+
+  productItem   ProductItem @relation(fields: [productItemId], references: [id])
+  productItemId Int
+
+  quantity Int
+
+  ingredients Ingredient[]
+
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?
+
+  token String
+
+  totalAmount Int
+  status      OrderStatus
+  paymentId   String?
+
+  items Json
+
+  fullName String
+  email    String
+  phone    String
+  address  String
+  comment  String?
+
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model verificationCode {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
+
+  code String
+
+  createAt DateTime @default(now())
+
+  @@unique([userId, code])
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDIG
+  SUCCEEDED
+  CANCELED
 }
