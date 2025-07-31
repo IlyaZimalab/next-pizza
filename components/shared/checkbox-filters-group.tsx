@@ -17,6 +17,7 @@ interface Props {
   defaultValues?: string[];
   selected?: Set<string>;
   className?: string;
+  name?: string;
 }
 
 export const CheckboxFiltersGroup = ({
@@ -28,6 +29,7 @@ export const CheckboxFiltersGroup = ({
   searchInputPlaceholder = 'Поиск...',
   onClickCheckbox,
   selected,
+  name,
   defaultValues,
 }: Props) => {
   const [showAll, setShowAll] = useState(false);
@@ -75,6 +77,7 @@ export const CheckboxFiltersGroup = ({
             text={item.text}
             value={item.value}
             endAdornment={item.endAdornment}
+            name={name}
             checked={selected?.has(item.value)}
             onCheckedChange={() => onClickCheckbox?.(item.value)}
           />

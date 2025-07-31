@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { Input } from '../ui';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
-import { FilterCheckbox } from './filter-checkbox';
 import { RangeSlider } from './range-slider';
 import { Title } from './title';
 import { useFilterIngredients } from '@/hooks/use-filter-Ingredients';
@@ -102,11 +101,6 @@ export const Filters = ({ className }: Props) => {
         />
       </div>
 
-      <div className="flex flex-col gap-4">
-        <FilterCheckbox text="Можно собрать" value="-2" />
-        <FilterCheckbox text="Новинки" value="-3" />
-      </div>
-
       <CheckboxFiltersGroup
         title="Ингредиенты"
         className="mt-5"
@@ -115,6 +109,7 @@ export const Filters = ({ className }: Props) => {
         items={items}
         onClickCheckbox={onAddId}
         selected={selectedId}
+        name='ingredients'
       />
     </div>
   );

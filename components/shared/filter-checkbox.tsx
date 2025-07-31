@@ -7,6 +7,7 @@ export interface FilterCheckboxProps {
     endAdornment?: ReactNode;
     onCheckedChange?: (checked: boolean) => void;
     checked?: boolean;
+    name?: string;
 }
 
 export const FilterCheckbox = ({
@@ -15,6 +16,7 @@ export const FilterCheckbox = ({
     checked,
     endAdornment,
     onCheckedChange,
+    name
 }:FilterCheckboxProps) => {
     return (
         <div className='flex items-center space-x-2'>
@@ -23,9 +25,9 @@ export const FilterCheckbox = ({
                 checked={checked}
                 value={value}
                 className='rounded-[8px] w-6 h-6 cursor-pointer'
-                id={`checkbox-${value}`}
+                id={`checkbox-${name}-${value}`}
             />
-            <label htmlFor={`checkbox-${value}`} className='leading-none cursor-pointer flex-1 '>
+            <label htmlFor={`checkbox-${name}-${value}`} className='leading-none cursor-pointer flex-1 '>
                 {text}
             </label>
             {endAdornment}
