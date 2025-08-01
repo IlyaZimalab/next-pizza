@@ -11,7 +11,6 @@ interface Props {
   items: Item[];
   defaultItems?: Item[];
   limit?: number;
-  loading?: boolean;
   searchInputPlaceholder?: string;
   onClickCheckbox?: (values: string) => void;
   defaultValues?: string[];
@@ -44,7 +43,7 @@ export const CheckboxFiltersGroup = ({
       <div className={className}>
         <p className="font-bold mb-3">{title}</p>
         
-        {...Array(limit)
+        {Array(limit)
           .fill(0)
           .map((_, index) => <Skeleton key={index} className="h-6 mb-3 w-full rounded-[8px]" />)}
         <Skeleton className="h-6 mb-3 w-28 rounded-[8px]" />
