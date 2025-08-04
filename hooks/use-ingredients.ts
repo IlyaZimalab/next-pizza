@@ -3,24 +3,24 @@ import { Ingredient } from '@prisma/client';
 import { useEffect, useState } from 'react';
 
 interface ReturnProps {
-    ingredients: Ingredient[];
+  ingredients: Ingredient[];
 }
 
-export const useFilterIngredients = (): ReturnProps => {
+export const useIngredients = (): ReturnProps => {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   useEffect(() => {
     async function fetchIngredients() {
-        try {
-            const ingredients = await Api.ingredients.getAll();
-            setIngredients(ingredients)
-        } catch(error) {
-            console.error(error)
-        }
+      try {
+        const ingredients = await Api.ingredients.getAll();
+        setIngredients(ingredients);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
-    fetchIngredients()
+    fetchIngredients();
   }, []);
-  
+
   return { ingredients };
 };

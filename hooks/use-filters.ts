@@ -1,7 +1,6 @@
-import { useRouter, useSearchParams } from "next/navigation";
-import qs from "qs";
-import { useEffect, useState } from "react";
-import { useSet } from "react-use";
+import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { useSet } from 'react-use';
 
 interface PriceProps {
   priceFrom?: number;
@@ -11,34 +10,43 @@ interface PriceProps {
 interface QueryFilters extends PriceProps {
   sizes: string;
   pizzaTypes: string;
-  selectedIngredients: string 
-} 
+  selectedIngredients: string;
+}
 
-export const useFilters = () => {
-  const router = useRouter();
+export interface Filters {
+  sizes: Set<string>;
+  pizzaTypes: Set<string>;
+  selectedIngredients: Set<string>;
+  prices: PriceProps;
+}
+
+interface ReturnType extends Filters {
+  setSelectedIngredients: (value: string) => void;
+  setPizzaTypes: (value: string) => void;
+  setSizes: (value: string) => void;
+  setPrices: (name: keyof PriceProps, value: number) => void;
+}
+
+export const useFilters = (): ReturnType => {
   const searchParams = useSearchParams() as unknown as Map<
     keyof QueryFilters,
     string
   >;
 
-  const [sizes, { toggle: toggleSize }] = useSet(
+  const [sizes, { toggle: toggleSizes }] = useSet(
     new Set<string>(
       searchParams.has('sizes') ? searchParams.get('sizes')?.split(',') : []
     )
   );
-  const [pizzaTypes, { toggle: togglePizzaType }] = useSet(
+  const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(
     new Set<string>(
       searchParams.has('pizzaTypes')
         ? searchParams.get('pizzaTypes')?.split(',')
         : []
     )
   );
-  const [selectedIngredients, { toggle: toggleIngredientsId }] = useSet(
-    new Set<string>(
-      searchParams.has('selectedIngredients')
-        ? searchParams.get('selectedIngredients')?.split(',')
-        : []
-    )
+  const [selectedIngredients, { toggle: toggleIngredients }] = useSet(
+    new Set<string>(searchParams.get('selectedIngredients')?.split(','))
   );
 
   const [prices, setPrices] = useState<PriceProps>({
@@ -46,31 +54,21 @@ export const useFilters = () => {
     priceTo: Number(searchParams.get('priceTo')) || undefined,
   });
 
-  useEffect(() => {
-      const filters = {
-        ...prices,
-        pizzaTypes: Array.from(pizzaTypes),
-        sizes: Array.from(sizes),
-        selectedIngredients: Array.from(selectedIngredients),
-      }
-      const query = (qs.stringify(filters, {
-        arrayFormat: 'comma',
-      }))
-  
-      router.push(`?${query}`, {
-        scroll: false,
-      })
-      
-    }, [prices, selectedIngredients, sizes, pizzaTypes, router])
+  const updatePrice = (name: keyof PriceProps, value: number) => {
+    setPrices((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   return {
-    toggleIngredientsId,
-    selectedIngredients,
-    togglePizzaType,
-    pizzaTypes,
-    toggleSize,
-    sizes,
-    setPrices,
-    prices
-  }
+      selectedIngredients,
+      setSelectedIngredients: toggleIngredients,
+      pizzaTypes,
+      setPizzaTypes: togglePizzaTypes,
+      sizes,
+      setSizes: toggleSizes,
+      prices,
+      setPrices: updatePrice,
+    }
 };
