@@ -19,11 +19,6 @@ export const Filters = ({ className }: Props) => {
     text: item.name,
   }));
 
-  const updatePrices= (prices: number[]) => {
-    filters.setPrices('priceFrom', prices[0]);
-    filters.setPrices('priceTo', prices[1]);
-  };
-
   return (
     <div className={className}>
       <Title text="Фильтрация" size="md" className="mb-5 font-bold"></Title>
@@ -60,7 +55,7 @@ export const Filters = ({ className }: Props) => {
             min={0}
             max={1000}
             value={String(filters.prices.priceFrom)}
-            onChange={(e) => filters.setPrices('priceFrom', Number(e.target.value))}
+            onChange={(e) => filters.setPriceFrom( Number(e.target.value))}
           />
           <Input
             type="number"
@@ -68,7 +63,7 @@ export const Filters = ({ className }: Props) => {
             min={100}
             max={1000}
             value={String(filters.prices.priceTo)}
-            onChange={(e) => filters.setPrices('priceTo', Number(e.target.value))}
+            onChange={(e) => filters.setPriceTo( Number(e.target.value))}
           />
         </div>
         <RangeSlider
@@ -76,7 +71,7 @@ export const Filters = ({ className }: Props) => {
           max={1000}
           step={10}
           value={[filters.prices.priceFrom || 0, filters.prices.priceTo || 1000]}
-          onValueChange={updatePrices}
+          onValueChange={filters.setBothPrices}
         />
       </div>
 

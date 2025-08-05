@@ -24,7 +24,9 @@ interface ReturnType extends Filters {
   setSelectedIngredients: (value: string) => void;
   setPizzaTypes: (value: string) => void;
   setSizes: (value: string) => void;
-  setPrices: (name: keyof PriceProps, value: number) => void;
+  setPriceFrom: (value: number) => void;
+  setPriceTo: (value: number) => void;
+  setBothPrices: (value: number[]) => void;
 }
 
 export const useFilters = (): ReturnType => {
@@ -54,21 +56,25 @@ export const useFilters = (): ReturnType => {
     priceTo: Number(searchParams.get('priceTo')) || undefined,
   });
 
-  const updatePrice = (name: keyof PriceProps, value: number) => {
-    setPrices((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const setPriceFrom = (value: number) =>
+    setPrices((prev) => ({ ...prev, priceFrom: value }));
+
+  const setPriceTo = (value: number) =>
+    setPrices((prev) => ({ ...prev, priceTo: value }));
+
+  const setBothPrices = (value: number[]) =>
+    setPrices(() => ({ priceFrom: value[0], priceTo: value[1] }));
 
   return {
-      selectedIngredients,
-      setSelectedIngredients: toggleIngredients,
-      pizzaTypes,
-      setPizzaTypes: togglePizzaTypes,
-      sizes,
-      setSizes: toggleSizes,
-      prices,
-      setPrices: updatePrice,
-    }
+    selectedIngredients,
+    setSelectedIngredients: toggleIngredients,
+    pizzaTypes,
+    setPizzaTypes: togglePizzaTypes,
+    sizes,
+    setSizes: toggleSizes,
+    prices,
+    setPriceFrom,
+    setPriceTo,
+    setBothPrices,
+  };
 };
