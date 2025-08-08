@@ -1,12 +1,15 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import { GroupVariants, ProductImage } from '.';
 import { DialogTitle } from '../ui/dialog';
 import { Button } from '../ui';
+import { pizzaSizes } from '@/shared/constants/pizza';
 
 type Variants = {
   name: string;
   value: '1' | '2' | '3';
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 interface Props {
@@ -28,6 +31,10 @@ export const ChoosePizzaForm = ({
 }: Props) => {
   const totalPrice = 350;
   const textDetails = '30 см, традиционное тесто 30';
+
+  const [size, setSize] = useState(20);
+  const [type, setType] = useState(1);
+  
   return (
     <div className="flex flex-1">
       <ProductImage imageUrl={imageUrl} size={30} type='pizza'/>
@@ -37,12 +44,9 @@ export const ChoosePizzaForm = ({
         </DialogTitle>
         <p className="text-gray-400">{textDetails}</p>
         <GroupVariants
-          items={[
-            { name: 'Маленькая', value: '1', disabled: false },
-            { name: 'Средняя', value: '2', disabled: false },
-            { name: 'Большая', value: '3', disabled: true },
-          ]}
-          selectedValue="2"
+          items={pizzaSizes}
+          value={String(size)}
+          onClick={(value) => setSize(Number(value))}
         />
         <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-[70%]">
           Добавить в корзину {totalPrice} ₽

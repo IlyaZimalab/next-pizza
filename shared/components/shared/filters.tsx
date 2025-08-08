@@ -4,15 +4,15 @@ import { Input } from '../ui';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { RangeSlider } from './range-slider';
 import { Title } from './title';
-import { useIngredients, useFilters, useQueryFilters } from '@/hooks';
+import { useIngredients, useFilters, useQueryFilters } from '@/shared/hooks';
 interface Props {
   className?: string;
 }
 
 export const Filters = ({ className }: Props) => {
   const { ingredients } = useIngredients();
-  const filters = useFilters() 
-  useQueryFilters(filters)
+  const filters = useFilters();
+  useQueryFilters(filters);
 
   const items = ingredients.map((item) => ({
     value: String(item.id),
@@ -55,7 +55,7 @@ export const Filters = ({ className }: Props) => {
             min={0}
             max={1000}
             value={String(filters.prices.priceFrom)}
-            onChange={(e) => filters.setPriceFrom( Number(e.target.value))}
+            onChange={(e) => filters.setPriceFrom(Number(e.target.value))}
           />
           <Input
             type="number"
@@ -63,14 +63,17 @@ export const Filters = ({ className }: Props) => {
             min={100}
             max={1000}
             value={String(filters.prices.priceTo)}
-            onChange={(e) => filters.setPriceTo( Number(e.target.value))}
+            onChange={(e) => filters.setPriceTo(Number(e.target.value))}
           />
         </div>
         <RangeSlider
           min={0}
           max={1000}
           step={10}
-          value={[filters.prices.priceFrom || 0, filters.prices.priceTo || 1000]}
+          value={[
+            filters.prices.priceFrom || 0,
+            filters.prices.priceTo || 1000,
+          ]}
           onValueChange={filters.setBothPrices}
         />
       </div>

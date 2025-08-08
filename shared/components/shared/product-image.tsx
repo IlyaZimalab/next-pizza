@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface Props {
   imageUrl: string;
@@ -7,7 +7,12 @@ interface Props {
   type: 'product' | 'pizza';
 }
 
-export const ProductImage = ({ imageUrl, className, size = 30, type }: Props) => {
+export const ProductImage = ({
+  imageUrl,
+  className,
+  size = 30,
+  type,
+}: Props) => {
   return (
     <div
       className={cn(

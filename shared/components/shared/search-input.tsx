@@ -1,7 +1,7 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import { Api } from '@/services/api-client';
+import { cn } from '@/shared/lib/utils';
+import { Api } from '@/shared/services/api-client';
 import { Product } from '@prisma/client';
 import { Search } from 'lucide-react';
 import Link from 'next/link';
@@ -25,10 +25,10 @@ export const SearchInput = ({ className }: Props) => {
   useDebounce(
     async () => {
       try {
-        const items = await Api.products.search(searchQuery)
-        setProducts(items)
+        const items = await Api.products.search(searchQuery);
+        setProducts(items);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     },
     250,
@@ -36,10 +36,10 @@ export const SearchInput = ({ className }: Props) => {
   );
 
   const onClickItem = () => {
-    setFocused(false)
-    setProducts([])
-    setSearchQuery('')
-  }
+    setFocused(false);
+    setProducts([]);
+    setSearchQuery('');
+  };
 
   return (
     <>

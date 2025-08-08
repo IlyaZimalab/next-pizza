@@ -2,7 +2,7 @@ import React from 'react';
 import { GroupVariants, ProductImage } from '.';
 import { DialogTitle } from '../ui/dialog';
 import { Button } from '../ui';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface Props {
   imageUrl: string;
@@ -20,8 +20,8 @@ export const ChooseProductForm = ({
   const totalPrice = 350;
   const textDetails = '30 см, традиционное тесто 30';
   return (
-    <div className={cn("flex flex-1", className)}>
-      <ProductImage imageUrl={imageUrl} type='product'/>
+    <div className={cn('flex flex-1', className)}>
+      <ProductImage imageUrl={imageUrl} type="product" />
       <div className="w-[450px] bg-gray-50 p-7">
         <DialogTitle title={name} className="font-extrabold text-[26px] md-1">
           {name}

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Header } from '@/components/shared/header';
+import { Header } from '@/shared/components/shared/header';
 import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 
 export default async function HomeLayout({
   modal,
-  children
+  children,
 }: Readonly<{
   modal: ReactNode;
   children: ReactNode;
 }>) {
   return (
-    <main className='min-h-screen'>
+    <main className="min-h-screen">
       <Header />
       {modal}
       {children}

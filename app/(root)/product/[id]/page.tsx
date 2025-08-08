@@ -1,9 +1,9 @@
 import { prisma } from '@/prisma/prisma-client';
 import { notFound } from 'next/navigation';
-import { Container, ProductImage, Title } from '@/components/shared';
-import { GroupVariants } from '@/components/shared/group-variants';
+import { Container, ProductImage, Title } from '@/shared/components/shared';
+import { GroupVariants } from '@/shared/components/shared/group-variants';
 
-export default async function ProductPage( {
+export default async function ProductPage({
   params,
 }: {
   params: { id: string };
@@ -17,7 +17,7 @@ export default async function ProductPage( {
   return (
     <Container className="flex flex-col my-2">
       <div className="flex flex-1">
-        <ProductImage imageUrl={product.imageUrl} size={40} type='pizza'/>
+        <ProductImage imageUrl={product.imageUrl} size={40} type="pizza" />
         <div className="w-[450px] bg-gray-50 p-7">
           <Title
             text={product.name}
@@ -35,7 +35,7 @@ export default async function ProductPage( {
               { name: 'Средняя', value: '2', disabled: false },
               { name: 'Большая', value: '3', disabled: true },
             ]}
-            selectedValue='2'
+            selectedValue="2"
           />
         </div>
       </div>
