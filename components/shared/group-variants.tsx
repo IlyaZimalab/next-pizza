@@ -34,7 +34,7 @@ export const GroupVariants = ({
           className={cn(
             "flex items-center justify-center cursor-pointer h-[30px] px-5 flex-1 rounded-3xl transition-all duration-400 text-sm",
             {
-              'bg-white shadow': item.value === selectedValue,
+              'bg-white shadow pointer-events-none': item.value === selectedValue,
               'text-gray-500 opacity-50 pointer-events-none': item.disabled,
             }
           )}

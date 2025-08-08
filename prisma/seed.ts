@@ -66,6 +66,7 @@ async function up() {
       ingredients: {
         connect: ingredients.slice(0, 5),
       },
+      isPizza: true,
     },
   });
 
@@ -78,6 +79,7 @@ async function up() {
       ingredients: {
         connect: ingredients.slice(5, 10),
       },
+      isPizza: true,
     },
   });
 
@@ -90,6 +92,7 @@ async function up() {
       ingredients: {
         connect: ingredients.slice(10, 40),
       },
+      isPizza: true,
     },
   });
 
