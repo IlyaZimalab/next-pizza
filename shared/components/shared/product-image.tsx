@@ -10,7 +10,7 @@ interface Props {
 export const ProductImage = ({
   imageUrl,
   className,
-  size = 30,
+  size,
   type,
 }: Props) => {
   return (
@@ -23,7 +23,7 @@ export const ProductImage = ({
       <img
         src={imageUrl}
         alt="Logo"
-        className={cn('relative left-3.5 top-3 transition-all duration-300', {
+        className={cn('relative left-2 top-2 transition-all z-10 duration-300', {
           'w-[300px] h-[300px]': size === 20,
           'w-[400px] h-[400px]': size === 30,
           'w-[500px] h-[500px]': size === 40,
