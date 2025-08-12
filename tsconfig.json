@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "shared/hooks/use-query-filters"
+    "shared/hooks/use-query-filters",
+    "shared/components/shared/cart-item-details"
   ],
   "exclude": ["node_modules"]
 }

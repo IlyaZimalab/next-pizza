@@ -1,5 +1,5 @@
 import React from 'react';
-import { GroupVariants, ProductImage } from '.';
+import { ProductImage } from '.';
 import { DialogTitle } from '../ui/dialog';
 import { Button } from '../ui';
 import { cn } from '@/shared/lib/utils';
