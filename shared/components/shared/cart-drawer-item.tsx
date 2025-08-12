@@ -2,7 +2,6 @@ import { cn } from '@/shared/lib/utils';
 
 import * as CartItem from './cart-item-details';
 import { CartItemProps } from './cart-item-details/cart-item-details.types.js';
-import { CountButton } from './count-button';
 import { Trash2Icon } from 'lucide-react';
 
 interface Props extends CartItemProps {
@@ -27,7 +26,7 @@ export const CartDrawerItem = ({
         <hr className="my-3" />
 
         <div className="flex items-center justify-between">
-          <CountButton value={quantity} />
+          <CartItem.CountButton value={quantity} />
           <div className='flex items-center gap-3'>
             <CartItem.Price value={price} />
             <Trash2Icon className='text-gray-400 cursor-pointer hover:text-gray-600' size={16}/>
