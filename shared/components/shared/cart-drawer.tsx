@@ -28,10 +28,16 @@ export const CartDrawer = ({
   const fetchCartItems = useCartStore((state) => state.fetchCartItems);
   const totalAmount = useCartStore((state) => state.totalAmount);
   const items = useCartStore((state) => state.items);
+  const updateItemQuantity = useCartStore((state) => state.updateItemQuantity)
 
   useEffect(() => {
     fetchCartItems()
   }, [])
+
+  const onClickCountButton = (id:number, quantity: number, type: 'plus' | 'minus') => {
+    const newQuantity = type === 'minus' ? quantity - 1 : quantity + 1;
+    updateItemQuantity(id, newQuantity)
+  }
 
   return (
     <Sheet>
@@ -54,6 +60,7 @@ export const CartDrawer = ({
                 name={item.name}
                 price={item.price}
                 quantity={item.quantity}
+                onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
               />
             </div>
           ))}
