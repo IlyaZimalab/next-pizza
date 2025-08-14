@@ -30,7 +30,7 @@ export const ProductCard = ({
           Классика!
         </p>
         <div className="flex justify-between items-center mt-3">
-          <span className="text-[20px] ">from <b>{price} ₽</b></span>
+          <span className="text-[20px] ">от <b>{price} ₽</b></span>
           <Button variant="secondary" className='bg-primary-foreground'>
             <Plus size={20}/>
             Add
