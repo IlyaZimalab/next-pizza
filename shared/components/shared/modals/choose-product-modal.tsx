@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { ChoosePizzaForm } from '../choose-pizza-form';
 import { ChooseProductForm } from '../choose-product-form';
 import { useCartStore } from '@/shared/store';
+import toast from 'react-hot-toast';
 
 interface Props {
   product: ProductWithRelations;
@@ -20,15 +21,30 @@ export const ChooseProductModal = ({ product, className }: Props) => {
   const productId = product.items[0].id;
   const productPrice = product.items[0].price;
   const addCartItem = useCartStore((state) => state.addCartItem);
+  const loading = useCartStore((state) => state.loading)
 
-  const onAddProduct = () => {
-    addCartItem({
-      productItemId: productId,
-    });
+  const onAddProduct = async () => {
+    try {
+      addCartItem({
+        productItemId: productId,
+      });
+      toast.success('Продукт добаленн в корзину!')
+      router.back();
+    } catch (error) {
+      toast.error('Не удалось продукт в корзину');
+      console.error(error);
+    }
   };
 
-  const onAddPizza = (productItemId: number, ingredents: number[]) => {
-    addCartItem({ productItemId, ingredents });
+  const onAddPizza = async (productItemId: number, ingredents: number[]) => {
+    try {
+      await addCartItem({ productItemId, ingredents });
+      toast.success('Пицца добаленна в корзину!');
+      router.back();
+    } catch (error) {
+      toast.error('Не удалось добавить пиццу в корзину');
+      console.error(error);
+    }
   };
 
   return (
@@ -46,6 +62,7 @@ export const ChooseProductModal = ({ product, className }: Props) => {
             ingredients={product.ingredients}
             items={product.items}
             onSubmit={onAddPizza}
+            loading={loading}
           />
         ) : (
           <ChooseProductForm
