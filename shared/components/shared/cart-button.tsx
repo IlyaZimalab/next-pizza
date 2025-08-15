@@ -1,17 +1,31 @@
+'use client';
+
 import { ShoppingCart, ArrowRight } from 'lucide-react';
 import React from 'react';
 import { Button } from '../ui';
 import { CartDrawer } from './cart-drawer';
+import { useCartStore } from '@/shared/store';
+import { cn } from '@/shared/lib/utils';
 
-export const CartButton = () => {
+interface Props {
+  className?: string;
+}
+
+export const CartButton = ({ className }: Props) => {
+  const totalAmount = useCartStore((state) => state.totalAmount);
+  const loading = useCartStore((state) => state.loading);
+  const items = useCartStore((state) => state.items);
   return (
     <CartDrawer>
-      <Button className="group relative">
-        <b>520 ₽</b>
+      <Button
+        loading={loading}
+        className={cn('group relative', { 'min-w-35': loading }, className)}
+      >
+        <b>{totalAmount} ₽</b>
         <span className="h-full w-[1px] bg-white/30 mx-3" />
         <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
           <ShoppingCart size={16} className="relative" strokeWidth={2} />
-          <b>3</b>
+          <b>{items.length}</b>
         </div>
         <ArrowRight
           size={20}

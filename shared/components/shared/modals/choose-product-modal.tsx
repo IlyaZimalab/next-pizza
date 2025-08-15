@@ -21,28 +21,22 @@ export const ChooseProductModal = ({ product, className }: Props) => {
   const productId = product.items[0].id;
   const productPrice = product.items[0].price;
   const addCartItem = useCartStore((state) => state.addCartItem);
-  const loading = useCartStore((state) => state.loading)
+  const loading = useCartStore((state) => state.loading);
 
-  const onAddProduct = async () => {
+  const onSubmit = async (productItemId?: number, ingredents?: number[]) => {
     try {
-      addCartItem({
-        productItemId: productId,
-      });
-      toast.success('Продукт добаленн в корзину!')
+      const itemId = productItemId ?? productId;
+      await addCartItem({ productItemId: itemId, ingredents });
+      toast.success(
+        <div className='flex flex-col'>
+          <span>Добавленно в корзину:</span>
+          <br />
+          <span className="font-bold block">{product.name}</span>
+        </div>
+      );
       router.back();
     } catch (error) {
-      toast.error('Не удалось продукт в корзину');
-      console.error(error);
-    }
-  };
-
-  const onAddPizza = async (productItemId: number, ingredents: number[]) => {
-    try {
-      await addCartItem({ productItemId, ingredents });
-      toast.success('Пицца добаленна в корзину!');
-      router.back();
-    } catch (error) {
-      toast.error('Не удалось добавить пиццу в корзину');
+      toast.error('Не удалось добавить товар в корзину');
       console.error(error);
     }
   };
@@ -61,7 +55,7 @@ export const ChooseProductModal = ({ product, className }: Props) => {
             name={product.name}
             ingredients={product.ingredients}
             items={product.items}
-            onSubmit={onAddPizza}
+            onSubmit={onSubmit}
             loading={loading}
           />
         ) : (
@@ -69,7 +63,8 @@ export const ChooseProductModal = ({ product, className }: Props) => {
             imageUrl={product.imageUrl}
             name={product.name}
             price={productPrice}
-            onSubmit={onAddProduct}
+            onSubmit={onSubmit}
+            loading={loading}
           />
         )}
       </DialogContent>

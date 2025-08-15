@@ -10,6 +10,7 @@ interface Props {
   onSubmit?: VoidFunction;
   className?: string;
   price: number;
+  loading?: boolean;
 }
 
 export const ChooseProductForm = ({
@@ -18,6 +19,7 @@ export const ChooseProductForm = ({
   onSubmit,
   className,
   price,
+  loading,
 }: Props) => {
   return (
     <div className={cn('flex flex-1', className)}>
@@ -27,7 +29,8 @@ export const ChooseProductForm = ({
           {name}
         </DialogTitle>
         <Button
-          onClick={onSubmit}
+          loading={loading}
+          onClick={() => onSubmit?.()}
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-85"
         >
           Добавить в корзину за {price} ₽

@@ -35,7 +35,7 @@ export default async function ProductPage({
               { name: 'Средняя', value: '2', disabled: false },
               { name: 'Большая', value: '3', disabled: true },
             ]}
-            selectedValue="2"
+            value="2"
           />
         </div>
       </div>
