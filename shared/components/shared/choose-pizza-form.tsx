@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { Ingredient, ProductItem } from '@prisma/client';
+import { Ingredient, ProductItem } from "@prisma/client";
 
-import { GroupVariants, IngredientItem, ProductImage } from '.';
-import { DialogTitle } from '../ui/dialog';
-import { Button } from '../ui';
+import { GroupVariants, IngredientItem, ProductImage, Title } from ".";
+import { DialogTitle } from "../ui/dialog";
+import { Button } from "../ui";
 import {
   mapPizzaType,
   PizzaSize,
   PizzaType,
   pizzaTypes,
-} from '@/shared/constants/pizza';
-import { calcTotalPizzaPrice } from '@/shared/lib';
-import { usePizzaOptions } from '@/shared/hooks';
+} from "@/shared/constants/pizza";
+import { calcTotalPizzaPrice } from "@/shared/lib";
+import { usePizzaOptions } from "@/shared/hooks";
 
 interface Props {
   imageUrl: string;
@@ -20,8 +20,9 @@ interface Props {
   ingredients?: Ingredient[];
   items: ProductItem[];
   onSubmit: (productItemId: number, ingredents: number[]) => void;
-  loading?: boolean
+  loading?: boolean;
   className?: string;
+  forModal?: boolean;
 }
 
 export const ChoosePizzaForm = ({
@@ -31,6 +32,7 @@ export const ChoosePizzaForm = ({
   ingredients,
   onSubmit,
   loading,
+  forModal,
   className,
 }: Props) => {
   const {
@@ -54,7 +56,7 @@ export const ChoosePizzaForm = ({
   const textDetails = `${size} см, ${mapPizzaType[type]} тесто`;
 
   const handleClickAdd = () => {
-    if(currentItemId) {
+    if (currentItemId) {
       onSubmit(currentItemId, Array.from(selectedIngredients));
     }
   };
@@ -63,9 +65,13 @@ export const ChoosePizzaForm = ({
     <div className="flex flex-1">
       <ProductImage imageUrl={imageUrl} type="pizza" size={size} />
       <div className="w-[490px] bg-gray-50 p-7">
-        <DialogTitle title={name} className="font-extrabold text-[26px] md-1">
-          {name}
-        </DialogTitle>
+        {forModal ? (
+          <DialogTitle title={name} className="font-extrabold text-[26px] mb-1">
+            {name}
+          </DialogTitle>
+        ) : (
+          <Title text={name} className="font-extrabold text-[26px] md-1" />
+        )}
         <p className="text-gray-400">{textDetails}</p>
         <div className="flex flex-col gap-4 mt-1">
           <GroupVariants

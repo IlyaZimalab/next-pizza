@@ -1,8 +1,8 @@
-import React from 'react';
-import { ProductImage } from '.';
-import { DialogTitle } from '../ui/dialog';
-import { Button } from '../ui';
-import { cn } from '@/shared/lib/utils';
+import React from "react";
+import { ProductImage, Title } from ".";
+import { DialogTitle } from "../ui/dialog";
+import { Button } from "../ui";
+import { cn } from "@/shared/lib/utils";
 
 interface Props {
   imageUrl: string;
@@ -11,6 +11,7 @@ interface Props {
   className?: string;
   price: number;
   loading?: boolean;
+  forModal?: boolean;
 }
 
 export const ChooseProductForm = ({
@@ -20,14 +21,19 @@ export const ChooseProductForm = ({
   className,
   price,
   loading,
+  forModal,
 }: Props) => {
   return (
-    <div className={cn('flex flex-1', className)}>
+    <div className={cn("flex flex-1", className)}>
       <ProductImage imageUrl={imageUrl} type="product" />
       <div className="w-[450px] bg-gray-50 p-7">
-        <DialogTitle title={name} className="font-extrabold text-[26px] mb-1">
-          {name}
-        </DialogTitle>
+        {forModal ? (
+          <DialogTitle title={name} className="font-extrabold text-[26px] mb-1">
+            {name}
+          </DialogTitle>
+        ) : (
+          <Title text={name} className="font-extrabold text-[26px] md-1" />
+        )}
         <Button
           loading={loading}
           onClick={() => onSubmit?.()}

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -8,14 +8,14 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/shared/components/ui/sheet';
-import { ArrowRight } from 'lucide-react';
-import { Button } from '../ui';
-import Link from 'next/link';
-import { CartDrawerItem } from './cart-drawer-item';
-import { getCartItemDetails } from '@/shared/lib';
-import { useCartStore } from '@/shared/store';
-import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
+} from "@/shared/components/ui/sheet";
+import { ArrowRight } from "lucide-react";
+import { Button } from "../ui";
+import Link from "next/link";
+import { CartDrawerItem } from "./cart-drawer-item";
+import { getCartItemDetails } from "@/shared/lib";
+import { useCartStore } from "@/shared/store";
+import { PizzaSize, PizzaType } from "@/shared/constants/pizza";
 
 interface Props {
   className?: string;
@@ -28,17 +28,21 @@ export const CartDrawer = ({
   const fetchCartItems = useCartStore((state) => state.fetchCartItems);
   const totalAmount = useCartStore((state) => state.totalAmount);
   const items = useCartStore((state) => state.items);
-  const updateItemQuantity = useCartStore((state) => state.updateItemQuantity)
-  const removeCartItem = useCartStore((state) => state.removeCartItem)
+  const updateItemQuantity = useCartStore((state) => state.updateItemQuantity);
+  const removeCartItem = useCartStore((state) => state.removeCartItem);
 
   useEffect(() => {
-    fetchCartItems()
-  }, [])
+    fetchCartItems();
+  }, []);
 
-  const onClickCountButton = (id:number, quantity: number, type: 'plus' | 'minus') => {
-    const newQuantity = type === 'minus' ? quantity - 1 : quantity + 1;
-    updateItemQuantity(id, newQuantity)
-  }
+  const onClickCountButton = (
+    id: number,
+    quantity: number,
+    type: "plus" | "minus"
+  ) => {
+    const newQuantity = type === "minus" ? quantity - 1 : quantity + 1;
+    updateItemQuantity(id, newQuantity);
+  };
 
   return (
     <Sheet>
@@ -57,12 +61,19 @@ export const CartDrawer = ({
               <CartDrawerItem
                 id={item.id}
                 imageUrl={item.imageUrl}
-                details={getCartItemDetails(item.pizzaType as PizzaType, item.pizzaSize as PizzaSize, item.ingredients)}
+                details={getCartItemDetails(
+                  item.pizzaType as PizzaType,
+                  item.pizzaSize as PizzaSize,
+                  item.ingredients
+                )}
                 name={item.name}
                 price={item.price}
                 quantity={item.quantity}
-                onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
+                onClickCountButton={(type) =>
+                  onClickCountButton(item.id, item.quantity, type)
+                }
                 onClickRemove={() => removeCartItem(item.id)}
+                disabled={item.disabled}
               />
             </div>
           ))}
