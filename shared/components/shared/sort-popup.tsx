@@ -14,7 +14,7 @@ export const SortPopup = ({ className }: Props) => {
     >
       <ArrowUpDown size={16} />
       <b>Sorting:</b>
-      <b className="text-primary">popular</b>
+      <b className="text-primary">Popular</b>
     </div>
   );
 };
